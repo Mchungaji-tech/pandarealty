@@ -1,0 +1,15 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/tektxbzg/public_html/pandarealty
+    - /bin/mkdir -p $DEPLOYPATH
+    - /bin/mkdir -p $DEPLOYPATH/uploads/properties
+    - /bin/mkdir -p $DEPLOYPATH/uploads/branding
+    - /bin/mkdir -p $DEPLOYPATH/uploads/realtor
+    - /bin/mkdir -p $DEPLOYPATH/uploads/avatars
+    - /bin/cp -R * $DEPLOYPATH/
+    - /bin/cp .htaccess $DEPLOYPATH/ 2>/dev/null || true
+    - /bin/cp .env $DEPLOYPATH/ 2>/dev/null || true
+    - /bin/chmod -R 755 $DEPLOYPATH/uploads
+    - /bin/chmod 644 $DEPLOYPATH/.htaccess 2>/dev/null || true
+    - /bin/chmod 600 $DEPLOYPATH/.env 2>/dev/null || true

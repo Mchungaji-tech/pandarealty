@@ -1,0 +1,83 @@
+/* Panda Realty - Animations & Keyframes
+   Designed & Developed by TekTrend */
+
+/* Scroll Reveal Classes */
+.reveal-fade {
+    opacity: 0;
+    transform: translateY(25px);
+    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-fade.revealed {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.reveal-left {
+    opacity: 0;
+    transform: translateX(-30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.reveal-left.revealed {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.reveal-right {
+    opacity: 0;
+    transform: translateX(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.reveal-right.revealed {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Gold Text Shimmer */
+.gold-shimmer {
+    background: linear-gradient(90deg, #c5a059 0%, #ffffff 50%, #c5a059 100%);
+    background-size: 200% auto;
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+    animation: goldShimmerEffect 4s linear infinite;
+}
+
+@keyframes goldShimmerEffect {
+    to {
+        background-position: 200% center;
+    }
+}
+
+/* Pulsing Badge */
+.pulse-badge {
+    animation: pulseAnimation 2s infinite;
+}
+
+@keyframes pulseAnimation {
+    0% {
+        box-shadow: 0 0 0 0 rgba(197, 160, 89, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(197, 160, 89, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(197, 160, 89, 0);
+    }
+}
+
+/* Floating animation */
+.floating-element {
+    animation: floatAnimation 3.5s ease-in-out infinite;
+}
+
+@keyframes floatAnimation {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-8px);
+    }
+}

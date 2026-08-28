@@ -1,48 +1,38 @@
 <?php
 /**
  * Panda Realty - cPanel Production Environment Diagnostics & Deployment Health Check
- * Target Server Path: /home/tektxbzg/public_html/pandareality
+ * Target Server Path: /home/tektxbzg/public_html/pandarealty
  * Designed & Developed by TekTrend
  */
 
 header('Content-Type: text/html; charset=UTF-8');
 
-$env_file = __DIR__ . '/.env';
-$env_cpanel = __DIR__ . '/.env.cpanel';
-$is_cpanel_env = false;
-
-// If .env doesn't exist but .env.cpanel exists, allow 1-click activation
-$activated_msg = '';
-if (isset($_GET['activate_cpanel_env']) && $_GET['activate_cpanel_env'] === '1') {
-    if (file_exists($env_cpanel)) {
-        if (@copy($env_cpanel, $env_file)) {
-            $activated_msg = "Successfully activated .env.cpanel as active .env configuration!";
-        } else {
-            $activated_msg = "Could not copy .env.cpanel automatically. Please rename .env.cpanel to .env in cPanel File Manager.";
-        }
-    }
+if (function_exists('mysqli_report')) {
+    @mysqli_report(MYSQLI_REPORT_OFF);
 }
 
-// Load .env or fallback to .env.cpanel
+$env_file = __DIR__ . '/.env';
+
+// Load single .env
 $env_vars = [];
-$target_env = file_exists($env_file) ? $env_file : (file_exists($env_cpanel) ? $env_cpanel : null);
-if ($target_env) {
-    $lines = file($target_env, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-    foreach ($lines as $line) {
-        $line = trim($line);
-        if ($line === '' || strpos($line, '#') === 0) continue;
-        if (strpos($line, '=') !== false) {
-            list($k, $v) = explode('=', $line, 2);
-            $env_vars[trim($k)] = trim(trim($v), "\"'");
+if (file_exists($env_file)) {
+    $lines = file($env_file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+    if ($lines !== false) {
+        foreach ($lines as $line) {
+            $line = trim($line);
+            if ($line === '' || strpos($line, '#') === 0) continue;
+            if (strpos($line, '=') !== false) {
+                list($k, $v) = explode('=', $line, 2);
+                $env_vars[trim($k)] = trim(trim($v), "\"'");
+            }
         }
     }
 }
 
 $db_host = $env_vars['DB_HOST'] ?? 'localhost';
-$db_name = $env_vars['DB_NAME'] ?? 'tektxbzg_pandareality';
-$db_user = $env_vars['DB_USER'] ?? 'tektxbzg_realty';
-$db_pass = $env_vars['DB_PASS'] ?? 'Gkf^u(9^Hv6x9~8#';
-
+$db_name = $env_vars['DB_NAME'] ?? 'tektxbzg_pandarealty';
+$db_user = $env_vars['DB_USER'] ?? 'tektxbzg_pandarealty';
+$db_pass = $env_vars['DB_PASS'] ?? 'PandaRealty#2026!SecureDb';
 
 // Test DB Connection
 $db_connected = false;
@@ -62,13 +52,14 @@ try {
 
     if ($mysqli) {
         $db_connected = true;
-        $res = mysqli_query($mysqli, "SHOW TABLES");
+        $res = @mysqli_query($mysqli, "SHOW TABLES");
         if ($res) {
             while ($row = mysqli_fetch_row($res)) {
                 $tables[] = $row[0];
             }
             $table_count = count($tables);
         }
+        @mysqli_close($mysqli);
     } else {
         $db_error = mysqli_connect_error();
     }
@@ -135,7 +126,6 @@ foreach ($extensions as $ext) {
         .status-badge { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 700; }
         .status-badge.ok { background: rgba(16, 185, 129, 0.15); color: var(--success); border: 1px solid var(--success); }
         .status-badge.fail { background: rgba(239, 68, 68, 0.15); color: var(--danger); border: 1px solid var(--danger); }
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
         .info-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 13px; }
         .info-label { color: var(--muted); }
         .info-val { font-weight: 600; font-family: monospace; }
@@ -150,16 +140,12 @@ foreach ($extensions as $ext) {
         <p style="color: var(--muted); font-size: 13px;">cPanel Production Deployment & Server Diagnostics</p>
     </div>
 
-    <?php if (!empty($activated_msg)): ?>
-        <div class="alert"><?= htmlspecialchars($activated_msg) ?></div>
-    <?php endif; ?>
-
     <!-- 1. Server Environment Details -->
     <div class="card">
         <h2>🌐 1. Server Environment & Path Verification</h2>
         <div class="info-row">
             <span class="info-label">Expected cPanel Root</span>
-            <span class="info-val">/home/tektxbzg/public_html/pandareality</span>
+            <span class="info-val"><?= htmlspecialchars($env_vars['SERVER_ROOT_PATH'] ?? '/home/tektxbzg/public_html/pandarealty') ?></span>
         </div>
         <div class="info-row">
             <span class="info-label">Current Server Path (__DIR__)</span>
@@ -183,8 +169,12 @@ foreach ($extensions as $ext) {
     <div class="card">
         <h2>🗄️ 2. MySQL Database Health</h2>
         <div class="info-row">
-            <span class="info-label">Database Host / Name</span>
-            <span class="info-val"><?= htmlspecialchars($db_host) ?> / <?= htmlspecialchars($db_name) ?></span>
+            <span class="info-label">Database Host</span>
+            <span class="info-val"><?= htmlspecialchars($db_host) ?></span>
+        </div>
+        <div class="info-row">
+            <span class="info-label">Database Name</span>
+            <span class="info-val"><?= htmlspecialchars($db_name) ?></span>
         </div>
         <div class="info-row">
             <span class="info-label">Database User</span>
@@ -202,15 +192,13 @@ foreach ($extensions as $ext) {
         </div>
         <?php if (!$db_connected): ?>
             <div style="margin-top: 20px; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 8px; padding: 16px; font-size: 13px; line-height: 1.6;">
-                <strong style="color: #f87171;">💡 How to Fix 'Access denied' in cPanel in 3 Quick Steps:</strong>
+                <strong style="color: #f87171;">💡 How to Setup Database in cPanel in 3 Simple Steps:</strong>
                 <ol style="margin-top: 10px; margin-left: 20px; color: #cbd5e1;">
-                    <li style="margin-bottom: 6px;">Open <strong>cPanel > MySQL Databases</strong>.</li>
-                    <li style="margin-bottom: 6px;">Scroll down to <strong>"Add User To Database"</strong> section:
-                        <br>• User: Select <code>tektxbzg_realty</code>
-                        <br>• Database: Select <code>tektxbzg_pandareality</code>
-                        <br>• Click <strong>Add</strong> $\rightarrow$ Check <strong>ALL PRIVILEGES</strong> $\rightarrow$ Click <strong>Make Changes</strong>.
-                    </li>
-                    <li>Under <strong>Current Users</strong>, if the password differs, click <strong>Change Password</strong> next to <code>tektxbzg_realty</code> and set it to match <code>.env</code>.</li>
+                    <li style="margin-bottom: 6px;">Open <strong>cPanel &gt; MySQL Databases</strong>.</li>
+                    <li style="margin-bottom: 6px;">Create Database <code>pandarealty</code> (Full Name: <code>tektxbzg_pandarealty</code>).</li>
+                    <li style="margin-bottom: 6px;">Create User <code>pandarealty</code> (Full Name: <code>tektxbzg_pandarealty</code>) with Password: <code>PandaRealty#2026!SecureDb</code>.</li>
+                    <li style="margin-bottom: 6px;">Scroll to <strong>Add User To Database</strong>: Select User <code>tektxbzg_pandarealty</code> and Database <code>tektxbzg_pandarealty</code> &rarr; Click <strong>Add</strong> &rarr; Check <strong>ALL PRIVILEGES</strong> &rarr; Click <strong>Make Changes</strong>.</li>
+                    <li>Open <strong>cPanel &gt; phpMyAdmin</strong> &rarr; Click <code>tektxbzg_pandarealty</code> on left &rarr; Click <strong>Import</strong> tab &rarr; Select <code>database.sql</code> &rarr; Click <strong>Import</strong>.</li>
                 </ol>
             </div>
         <?php elseif ($db_connected && $table_count > 0): ?>
@@ -219,7 +207,7 @@ foreach ($extensions as $ext) {
             </div>
         <?php elseif ($db_connected && $table_count === 0): ?>
             <div style="margin-top: 15px; color: var(--warning); font-size: 13px;">
-                ⚠️ Connected to database, but 0 tables found. Please import <code>database.sql</code> via cPanel phpMyAdmin.
+                ⚠️ Connected to database, but 0 tables found. Please import <code>database.sql</code> via cPanel phpMyAdmin into <code>tektxbzg_pandarealty</code>.
             </div>
         <?php endif; ?>
     </div>

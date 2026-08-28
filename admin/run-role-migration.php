@@ -132,4 +132,4 @@ echo "  ceo_users    : " . table_count($conn, 'ceo_users') . "\n";
 echo "  staff_members: " . table_count($conn, 'staff_members') . "\n";
 
 echo "\n✅ Done. You can now sign in via the standalone portals using your SAME email & password.\n";
-echo "   Start: /pandareality/admin/choose-login.php\n";
+echo "   Start: /pandarealty/admin/choose-login.php\n";

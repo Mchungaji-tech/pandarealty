@@ -116,17 +116,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-$page_title = "Sign In & Client Portal | Panda Realty";
+$page_title = "Sign In & Client Portal | Panda Realty Eldoret";
+$page_description = "Sign in to your Panda Realty client portal to view saved properties, manage bookings, and list real estate in Eldoret.";
+
 require_once __DIR__ . '/includes/header.php';
 require_once __DIR__ . '/includes/nav.php';
 ?>
 
-<div style="margin-top: 100px; padding: 60px 20px; min-height: 75vh; display: flex; align-items: center; justify-content: center;">
-    <div style="background: white; border: 1px solid var(--border); border-radius: 12px; max-width: 480px; width: 100%; padding: 45px; box-shadow: var(--card-shadow);">
+<div class="auth-container">
+    <div class="auth-card">
         
-        <div style="text-align: center; margin-bottom: 25px;">
-            <div class="logo-main" style="font-size: 26px;">PANDA <span style="color: var(--accent);">REALTY</span></div>
-            <p style="font-size: 13px; color: var(--gray); margin-top: 4px;">Sign in to list properties, book tours, or access controls.</p>
+        <div style="text-align: center; margin-bottom: 22px;">
+            <div class="logo-main" style="font-size: 24px;">PANDA <span style="color: var(--accent);">REALTY</span></div>
+            <p style="font-size: 13px; color: var(--gray); margin-top: 4px;">Sign in to list properties, book tours, or access client portal.</p>
         </div>
 
         <?php if (!empty($auth_notice)): ?>

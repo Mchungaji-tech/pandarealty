@@ -14,6 +14,8 @@ document.addEventListener('DOMContentLoaded', () => {
     initInstallmentCalculator();
     initScrollAnimations();
     initNavbarScroll();
+    initMobileMenu();
+    initFaqAccordion();
 });
 
 /* =======================================================
@@ -527,4 +529,96 @@ window.toggleFavorite = function(e, btn) {
         icon.className = 'far fa-heart';
     }
 };
+
+/* =======================================================
+   12. RESPONSIVE MOBILE MENU DRAWER & ACCORDION
+   ======================================================= */
+function initMobileMenu() {
+    const btn = document.getElementById('mobileMenuBtn');
+    const drawer = document.getElementById('mobileNavDrawer');
+    const overlay = document.getElementById('mobileNavOverlay');
+    const closeBtn = document.getElementById('mobileNavClose');
+
+    window.openMobileMenu = function() {
+        if (drawer) {
+            drawer.classList.add('active');
+            drawer.setAttribute('aria-hidden', 'false');
+        }
+        if (overlay) overlay.classList.add('active');
+        if (btn) {
+            btn.classList.add('active');
+            btn.setAttribute('aria-expanded', 'true');
+        }
+        document.body.style.overflow = 'hidden';
+    };
+
+    window.closeMobileMenu = function() {
+        if (drawer) {
+            drawer.classList.remove('active');
+            drawer.setAttribute('aria-hidden', 'true');
+        }
+        if (overlay) overlay.classList.remove('active');
+        if (btn) {
+            btn.classList.remove('active');
+            btn.setAttribute('aria-expanded', 'false');
+        }
+        if (!document.querySelector('.modal.active')) {
+            document.body.style.overflow = '';
+        }
+    };
+
+    window.toggleMobileMenu = function() {
+        if (drawer && drawer.classList.contains('active')) {
+            window.closeMobileMenu();
+        } else {
+            window.openMobileMenu();
+        }
+    };
+
+    if (btn) {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            window.toggleMobileMenu();
+        });
+    }
+
+    if (closeBtn) {
+        closeBtn.addEventListener('click', window.closeMobileMenu);
+    }
+
+    if (overlay) {
+        overlay.addEventListener('click', window.closeMobileMenu);
+    }
+
+    // Close on drawer link click
+    if (drawer) {
+        drawer.querySelectorAll('.drawer-link').forEach(link => {
+            link.addEventListener('click', window.closeMobileMenu);
+        });
+    }
+}
+
+function initFaqAccordion() {
+    const faqItems = document.querySelectorAll('.faq-item');
+    faqItems.forEach(item => {
+        const questionBtn = item.querySelector('.faq-question');
+        if (!questionBtn) return;
+
+        questionBtn.addEventListener('click', () => {
+            const isActive = item.classList.contains('active');
+            // Close other items
+            faqItems.forEach(i => {
+                i.classList.remove('active');
+                const btn = i.querySelector('.faq-question');
+                if (btn) btn.setAttribute('aria-expanded', 'false');
+            });
+
+            if (!isActive) {
+                item.classList.add('active');
+                questionBtn.setAttribute('aria-expanded', 'true');
+            }
+        });
+    });
+}
+
 

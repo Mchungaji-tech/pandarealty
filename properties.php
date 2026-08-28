@@ -4,9 +4,7 @@
  * Designed & Developed by TekTrend
  */
 
-$page_title = "Browse Properties & Land in Eldoret";
-require_once __DIR__ . '/includes/header.php';
-require_once __DIR__ . '/includes/nav.php';
+require_once __DIR__ . '/config/settings.php';
 
 $conn = get_db_connection();
 
@@ -46,15 +44,64 @@ if (!empty($filter_bedrooms)) {
 // Handle quick tab filter
 if ($filter_tab === 'studio') {
     $where_clauses[] = "type = 'studio'";
+    $catalog_heading = "Executive Studio Apartments in Eldoret";
+    $page_title = "Executive Studio Apartments in Eldoret | High ROI";
+    $page_description = "Browse modern executive studio apartments in Annex and Pioneer, Eldoret. Verified high-demand rental investments with superior annual yields.";
 } elseif ($filter_tab === 'land') {
     $where_clauses[] = "type = 'land'";
+    $catalog_heading = "Prime Titled Land & 50x100 Plots in Eldoret";
+    $page_title = "Plots & Land for Sale in Eldoret | 50x100 Ready Title Deeds";
+    $page_description = "Secure prime 50x100 freehold titled plots in Annex, Elgon View, Kapsoya, and Pioneer Eldoret. Verified land searches and installment plans.";
 } elseif ($filter_tab === 'construction') {
     $where_clauses[] = "status = 'under_construction'";
+    $catalog_heading = "Ongoing Building Projects & Luxury Villas";
+    $page_title = "Building Projects & Off-Plan Properties in Eldoret";
+    $page_description = "Discover off-plan townhouses, luxury villas, and multi-unit studio developments under construction in Eldoret with milestone handover tracking.";
 } elseif ($filter_tab === 'sale') {
     $where_clauses[] = "category = 'sale'";
+    $catalog_heading = "Properties & Houses for Sale in Eldoret";
+    $page_title = "Houses & Land for Sale in Eldoret | Verified Titles";
+    $page_description = "Explore freehold residential homes, executive bungalows, townhouses, and plots for sale in Eldoret with flexible financing options.";
 } elseif ($filter_tab === 'rent') {
     $where_clauses[] = "category = 'rent'";
+    $catalog_heading = "Properties for Rent in Eldoret";
+    $page_title = "Rental Houses & Studio Apartments in Eldoret";
+    $page_description = "Find verified rental apartments, executive studio units, and family homes for rent across Eldoret and Uasin Gishu County.";
+} else {
+    $catalog_heading = "Explore All Eldoret Properties & Real Estate";
+    $page_title = "Browse Properties, Plots & Studio Apartments in Eldoret";
+    $page_description = "Search prime 50x100 titled plots, modern studio apartments, and luxury villas for sale and rent in Eldoret, Kenya with Perpetuah Realtor.";
 }
+
+if (!empty($filter_location)) {
+    $page_title = "Properties in " . htmlspecialchars($filter_location) . ", Eldoret | Panda Realty";
+}
+
+// BreadcrumbList JSON-LD Schema
+$site_url = (is_https_request() ? 'https://' : 'http://') . ($_SERVER['HTTP_HOST'] ?? 'localhost') . app_path();
+$schema_json_ld_extra = [
+    [
+        "@context" => "https://schema.org",
+        "@type" => "BreadcrumbList",
+        "itemListElement" => [
+            [
+                "@type" => "ListItem",
+                "position" => 1,
+                "name" => "Home",
+                "item" => $site_url . '/'
+            ],
+            [
+                "@type" => "ListItem",
+                "position" => 2,
+                "name" => "Properties",
+                "item" => $site_url . '/properties'
+            ]
+        ]
+    ]
+];
+
+require_once __DIR__ . '/includes/header.php';
+require_once __DIR__ . '/includes/nav.php';
 
 $where_sql = implode(' AND ', $where_clauses);
 $query = "SELECT * FROM properties WHERE $where_sql ORDER BY id DESC";
@@ -68,12 +115,12 @@ if ($res) {
 }
 ?>
 
-<div style="margin-top: 100px; padding: 40px 60px 0; max-width: 1600px; margin-left: auto; margin-right: auto;">
-    <h1 class="font-serif" style="font-size: 38px; margin-bottom: 8px;">
-        <?= $filter_tab === 'studio' ? 'Executive Studio Apartments in Eldoret' : ($filter_tab === 'land' ? 'Prime Titled Land & Plots for Sale' : 'Explore All Properties & Real Estate') ?>
+<div class="page-header-banner">
+    <h1 class="font-serif">
+        <?= htmlspecialchars($catalog_heading) ?>
     </h1>
-    <p style="color: var(--gray); font-size: 15px;">
-        Found <?= count($properties) ?> listing(s) matching your criteria in Eldoret and Uasin Gishu County.
+    <p>
+        Found <?= count($properties) ?> verified listing(s) matching your criteria in Eldoret and Uasin Gishu County.
     </p>
 </div>
 

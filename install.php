@@ -68,7 +68,7 @@ if (!$installer_allowed) {
 $host = install_load_env_value('DB_HOST', 'localhost');
 $user = install_load_env_value('DB_USER', 'root');
 $pass = install_load_env_value('DB_PASS', '');
-$dbname = install_load_env_value('DB_NAME', 'pandareality_db');
+$dbname = install_load_env_value('DB_NAME', 'tektxbzg_pandarealty');
 $sqlFile = __DIR__ . '/database.sql';
 
 $statusMessages = [];
@@ -83,28 +83,34 @@ try {
     }
     $statusMessages[] = ["type" => "success", "text" => "Successfully connected to MySQL server (host: $host)."];
 
-    // 2. Read SQL File
+    // 2. Ensure Database Exists and Select
+    $safe_dbname = preg_replace('/[^a-zA-Z0-9_]/', '', $dbname);
+    @$mysqli->query("CREATE DATABASE IF NOT EXISTS `{$safe_dbname}` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci");
+    if (!$mysqli->select_db($safe_dbname)) {
+        throw new Exception("Could not select database `{$safe_dbname}`: " . $mysqli->error);
+    }
+    $statusMessages[] = ["type" => "success", "text" => "Selected database `{$safe_dbname}`."];
+
+    // 3. Read SQL File
     if (!file_exists($sqlFile)) {
         throw new Exception("SQL file not found at: " . $sqlFile);
     }
     $sqlContent = file_get_contents($sqlFile);
     $statusMessages[] = ["type" => "success", "text" => "Found database.sql definition file."];
 
-    // 3. Execute Multi Query
+    // 4. Execute Multi Query
     if ($mysqli->multi_query($sqlContent)) {
         do {
             if ($result = $mysqli->store_result()) {
                 $result->free();
             }
         } while ($mysqli->more_results() && $mysqli->next_result());
-        $statusMessages[] = ["type" => "success", "text" => "Database `pandareality_db` and all tables created and seeded successfully."];
+        $statusMessages[] = ["type" => "success", "text" => "Database `{$safe_dbname}` tables created and seeded successfully."];
     } else {
         throw new Exception("Error executing SQL script: " . $mysqli->error);
     }
 
-    // 4. Generate one-time credentials for seeded administrative accounts
-    $mysqli->select_db($dbname);
-    
+    // 5. Generate one-time credentials for seeded administrative accounts
     $generatedCredentials = [
         'superadmin@pandarealty.co.ke' => generate_install_password(),
         'perpetuah@pandarealty.co.ke' => generate_install_password(),
@@ -126,6 +132,11 @@ try {
     $stmt3 = $mysqli->prepare("UPDATE users SET password = ? WHERE id = 3");
     $stmt3->bind_param("s", $admin_pass);
     $stmt3->execute();
+
+    // Mirror to separate role tables if they exist
+    @$mysqli->query("UPDATE super_admins SET password_hash = '{$superadmin1_pass}' WHERE email = 'superadmin@pandarealty.co.ke'");
+    @$mysqli->query("UPDATE super_admins SET password_hash = '{$admin_pass}' WHERE email = 'admin@tektrend.co.ke'");
+    @$mysqli->query("UPDATE ceo_users SET password_hash = '{$superadmin2_pass}' WHERE email = 'perpetuah@pandarealty.co.ke'");
 
     $statusMessages[] = ["type" => "success", "text" => "Seeded admin accounts were rotated to one-time passwords for this installation."];
 
@@ -281,7 +292,7 @@ if (php_sapi_name() === 'cli') {
                 <p style="margin-bottom: 10px;">Store these securely. They are shown only for this installer run and should be changed immediately after first login.</p>
                 <ul>
                     <li><strong>Root Super Admin:</strong> <code>superadmin@pandarealty.co.ke</code> | <code><?= htmlspecialchars($generatedCredentials['superadmin@pandarealty.co.ke'] ?? 'generated during CLI install') ?></code></li>
-                    <li><strong>CEO (Perpetuah):</strong> <code>perpetuah@pandarealty.co.ke</code> | <code><?= htmlspecialchars($generatedCredentials['perpetuah@pandareality.co.ke'] ?? 'generated during CLI install') ?></code></li>
+                    <li><strong>CEO (Perpetuah):</strong> <code>perpetuah@pandarealty.co.ke</code> | <code><?= htmlspecialchars($generatedCredentials['perpetuah@pandarealty.co.ke'] ?? 'generated during CLI install') ?></code></li>
                     <li><strong>Developer:</strong> <code>admin@tektrend.co.ke</code> | <code><?= htmlspecialchars($generatedCredentials['admin@tektrend.co.ke'] ?? 'generated during CLI install') ?></code></li>
                 </ul>
             </div>

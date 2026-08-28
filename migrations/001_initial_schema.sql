@@ -1,8 +1,6 @@
 -- Panda Realty Database Schema
 -- Designed & Developed by TekTrend
-
-CREATE DATABASE IF NOT EXISTS `pandareality_db` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE `pandareality_db`;
+-- Note: In cPanel phpMyAdmin, select your created database (e.g. tektxbzg_pandarealty) and import this file directly.
 
 -- 1. Users Table (Legacy shared table — still used for clients & portal admins; separate role tables below)
 CREATE TABLE IF NOT EXISTS `users` (
@@ -328,21 +326,21 @@ CREATE TABLE IF NOT EXISTS `app_settings` (
 -- 1. Users Seed (Root Super Admin, CEO, Developer)
 -- Initial seeded passwords are rotated by install.php during approved setup.
 INSERT INTO `users` (`id`, `name`, `email`, `phone`, `password`, `role`, `avatar`, `two_factor_enabled`) VALUES
-(1, 'Super Administrator', 'superadmin@pandarealty.co.ke', '+254708289852', '$2y$10$iMZZzL3n20yC.Z/Z5Vms4.ZtFjVn52aA/e8x4lP4Q31fVbmO56Eea', 'superadmin', 'assets/images/superadmin.png', 0),
-(2, 'Perpetuah Chepchirchir', 'perpetuah@pandarealty.co.ke', '+254708289852', '$2y$10$wE8wXN4u0Z.a7Y1qHqO79.6k1yXjVfX5m2aA4p7Z4l2Q8fVbm98Ea', 'ceo', 'assets/images/perpetuah.jpg', 0),
-(3, 'TekTrend Technical Admin', 'admin@tektrend.co.ke', '+254700112233', '$2y$10$4B9Y8q0F7aE1Z2y5x8w4me8aN9k1yXjVfX5m2aA4p7Z4l2Q8fVbmO', 'developer', 'assets/images/admin.png', 0)
+(1, 'Super Administrator', 'superadmin@pandarealty.co.ke', '+254708289852', '$2y$10$73zXmm.pmVvXDpBzMnSYG.qEtIqjIaYz.WAw85I.0QssjJ7EyhDR6', 'superadmin', 'assets/images/superadmin.png', 0),
+(2, 'Perpetuah Chepchirchir', 'perpetuah@pandarealty.co.ke', '+254708289852', '$2y$10$AYYrPOfX4JknHhQgoGWG2OlDXMeSEXmgxboc1tcwPFNU7IiHm7lau', 'ceo', 'assets/images/perpetuah.jpg', 0),
+(3, 'TekTrend Technical Admin', 'admin@tektrend.co.ke', '+254700112233', '$2y$10$K/11gI9u.rLsdLJUh00yBuiiFjTWK9GmXPzcDtMsg1Sth6J0JBpJu', 'developer', 'assets/images/admin.png', 0)
 ON DUPLICATE KEY UPDATE `name`=VALUES(`name`);
 
 -- 1b. Separate-Role Table Seeds (for standalone portals — same bcrypt hashes, same passwords)
 -- These are authoritative for admin/super-admin-login.php, ceo-login.php, staff-login.php.
 -- Developer accounts are mirrored into super_admins since developer == full access.
 INSERT INTO `super_admins` (`id`, `full_name`, `email`, `phone`, `password_hash`, `two_factor_enabled`) VALUES
-(1, 'Super Administrator', 'superadmin@pandarealty.co.ke', '+254708289852', '$2y$10$iMZZzL3n20yC.Z/Z5Vms4.ZtFjVn52aA/e8x4lP4Q31fVbmO56Eea', 0),
-(2, 'TekTrend Technical Admin', 'admin@tektrend.co.ke', '+254700112233', '$2y$10$4B9Y8q0F7aE1Z2y5x8w4me8aN9k1yXjVfX5m2aA4p7Z4l2Q8fVbmO', 0)
+(1, 'Super Administrator', 'superadmin@pandarealty.co.ke', '+254708289852', '$2y$10$73zXmm.pmVvXDpBzMnSYG.qEtIqjIaYz.WAw85I.0QssjJ7EyhDR6', 0),
+(2, 'TekTrend Technical Admin', 'admin@tektrend.co.ke', '+254700112233', '$2y$10$K/11gI9u.rLsdLJUh00yBuiiFjTWK9GmXPzcDtMsg1Sth6J0JBpJu', 0)
 ON DUPLICATE KEY UPDATE `full_name`=VALUES(`full_name`);
 
 INSERT INTO `ceo_users` (`id`, `full_name`, `email`, `phone`, `password_hash`, `two_factor_enabled`) VALUES
-(1, 'Perpetuah Chepchirchir', 'perpetuah@pandarealty.co.ke', '+254708289852', '$2y$10$wE8wXN4u0Z.a7Y1qHqO79.6k1yXjVfX5m2aA4p7Z4l2Q8fVbm98Ea', 0)
+(1, 'Perpetuah Chepchirchir', 'perpetuah@pandarealty.co.ke', '+254708289852', '$2y$10$AYYrPOfX4JknHhQgoGWG2OlDXMeSEXmgxboc1tcwPFNU7IiHm7lau', 0)
 ON DUPLICATE KEY UPDATE `full_name`=VALUES(`full_name`);
 
 -- Staff: initially empty. Use /admin/staff-register.php to onboard staff.

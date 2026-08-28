@@ -48,6 +48,7 @@
             <h4 class="footer-title">Company & Legal</h4>
             <ul class="footer-links">
                 <li><a href="<?= htmlspecialchars(app_path('contact')) ?>"><i class="fas fa-chevron-right" style="font-size: 10px;"></i> Contact Perpetuah</a></li>
+                <li><a href="<?= htmlspecialchars(app_path('privacy')) ?>"><i class="fas fa-chevron-right" style="font-size: 10px;"></i> Privacy Policy</a></li>
                 <li><a href="<?= htmlspecialchars(app_path('terms')) ?>"><i class="fas fa-chevron-right" style="font-size: 10px;"></i> Terms & Conditions</a></li>
                 <li><a href="<?= htmlspecialchars(app_path('admin/staff-login')) ?>"><i class="fas fa-chevron-right" style="font-size: 10px;"></i> Staff Portal</a></li>
             </ul>

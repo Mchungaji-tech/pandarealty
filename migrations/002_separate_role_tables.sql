@@ -5,7 +5,7 @@
 -- Super Admin, CEO, and Staff tables WITHOUT touching existing data.
 -- (For fresh installs, use 001_initial_schema.sql instead.)
 -- =======================================================
-USE `pandareality_db`;
+-- Note: Select your active database before executing.
 
 -- A) Users table — add missing last_login_ip column if absent
 SET @col_exists = (

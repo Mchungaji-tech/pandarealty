@@ -1,0 +1,19 @@
+User-agent: *
+Allow: /
+Allow: /assets/
+Allow: /uploads/
+Disallow: /admin/
+Disallow: /config/
+Disallow: /migrations/
+Disallow: /install.php
+Disallow: /test-status.php
+Disallow: /cpanel_setup.php
+Disallow: /audit-dashboard-health.php
+Disallow: /deploy.php
+
+# Crawl-delay
+Crawl-delay: 1
+
+# XML Sitemap Directive
+Sitemap: https://pandarealty.co.ke/sitemap.xml
+Sitemap: http://localhost/pandarealty/sitemap.xml

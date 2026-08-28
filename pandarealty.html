@@ -1,0 +1,1313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ROYALTY | Modern Luxury Real Estate</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #000000;
+            --secondary: #ffffff;
+            --accent: #c5a059;
+            --gray: #888888;
+            --light-gray: #f5f5f5;
+            --border: #e0e0e0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--secondary);
+            color: var(--primary);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255,255,255,0.98);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            padding: 20px 60px;
+            transition: all 0.3s;
+        }
+
+        .navbar.scrolled {
+            padding: 15px 60px;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+        }
+
+        .nav-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            font-weight: 600;
+            letter-spacing: 4px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--primary);
+            font-size: 14px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 12px 28px;
+            border: none;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: var(--secondary);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--secondary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-primary:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: var(--primary);
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 80px;
+            min-height: 90vh;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            padding: 0 60px;
+            gap: 60px;
+        }
+
+        .hero-content {
+            padding: 60px 0;
+        }
+
+        .hero-label {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--accent);
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .hero-title {
+            font-size: clamp(48px, 5vw, 72px);
+            font-weight: 600;
+            line-height: 1.1;
+            margin-bottom: 30px;
+            letter-spacing: -2px;
+        }
+
+        .hero-text {
+            font-size: 18px;
+            color: var(--gray);
+            line-height: 1.6;
+            margin-bottom: 40px;
+            max-width: 500px;
+        }
+
+        .hero-image {
+            position: relative;
+            height: 700px;
+            background: url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1200') center/cover;
+            border-radius: 4px;
+        }
+
+        /* Search Bar */
+        .search-container {
+            background: var(--light-gray);
+            padding: 40px 60px;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .search-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .search-title {
+            font-size: 24px;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+
+        .search-form {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr auto;
+            gap: 15px;
+            align-items: end;
+        }
+
+        .search-field {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .search-field label {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--gray);
+        }
+
+        .search-field input,
+        .search-field select {
+            padding: 15px 20px;
+            border: 1px solid var(--border);
+            background: white;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .search-field input:focus,
+        .search-field select:focus {
+            border-color: var(--accent);
+        }
+
+        .search-btn {
+            padding: 15px 40px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s;
+            height: fit-content;
+        }
+
+        .search-btn:hover {
+            background: var(--accent);
+            color: var(--primary);
+        }
+
+        /* Filters */
+        .filters {
+            padding: 30px 60px;
+            background: white;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .filters-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .filter-tag {
+            padding: 10px 20px;
+            background: var(--light-gray);
+            border: 1px solid var(--border);
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .filter-tag:hover,
+        .filter-tag.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .filter-tag i {
+            font-size: 12px;
+        }
+
+        /* Properties Grid */
+        .properties {
+            padding: 80px 60px;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 60px;
+        }
+
+        .section-title {
+            font-size: 48px;
+            font-weight: 600;
+        }
+
+        .section-subtitle {
+            color: var(--gray);
+            font-size: 16px;
+        }
+
+        .properties-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 40px;
+        }
+
+        .property-card {
+            background: white;
+            border: 1px solid var(--border);
+            cursor: pointer;
+            transition: all 0.3s;
+            overflow: hidden;
+        }
+
+        .property-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .property-image {
+            height: 300px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .property-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s;
+        }
+
+        .property-card:hover .property-image img {
+            transform: scale(1.05);
+        }
+
+        .property-badge {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: var(--accent);
+            color: var(--primary);
+            padding: 8px 16px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .property-favorite {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .property-favorite:hover {
+            background: var(--accent);
+        }
+
+        .property-info {
+            padding: 30px;
+        }
+
+        .property-price {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .property-location {
+            font-size: 14px;
+            color: var(--gray);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .property-features {
+            display: flex;
+            gap: 25px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+            font-size: 14px;
+            color: var(--gray);
+        }
+
+        .property-features span {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .property-features i {
+            color: var(--accent);
+        }
+
+        /* Toaster Card - Tips */
+        .toaster-card {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 400px;
+            background: white;
+            border: 2px solid var(--accent);
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+            z-index: 999;
+            transform: translateX(450px);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .toaster-card.show {
+            transform: translateX(0);
+        }
+
+        .toaster-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .toaster-title {
+            font-size: 18px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .toaster-title i {
+            color: var(--accent);
+        }
+
+        .toaster-close {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: var(--gray);
+            transition: color 0.3s;
+        }
+
+        .toaster-close:hover {
+            color: var(--primary);
+        }
+
+        .toaster-content {
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--gray);
+            margin-bottom: 20px;
+        }
+
+        .toaster-tip {
+            background: var(--light-gray);
+            padding: 15px;
+            border-left: 3px solid var(--accent);
+            font-size: 13px;
+            margin-bottom: 15px;
+        }
+
+        .toaster-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .toaster-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .toaster-btn-primary {
+            background: var(--accent);
+            color: var(--primary);
+        }
+
+        .toaster-btn-primary:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .toaster-btn-secondary {
+            background: var(--light-gray);
+            color: var(--primary);
+        }
+
+        .toaster-btn-secondary:hover {
+            background: var(--border);
+        }
+
+        .toaster-toggle {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            z-index: 998;
+            transition: all 0.3s;
+        }
+
+        .toaster-toggle:hover {
+            transform: scale(1.1);
+            background: var(--primary);
+            color: white;
+        }
+
+        .toaster-toggle.hide {
+            display: none;
+        }
+
+        /* Agent CTA Section */
+        .agent-cta {
+            background: var(--primary);
+            color: white;
+            padding: 100px 60px;
+            text-align: center;
+        }
+
+        .agent-cta-title {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .agent-cta-text {
+            font-size: 18px;
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+
+        .agent-cta-btn {
+            display: inline-block;
+            padding: 20px 50px;
+            background: var(--accent);
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.3s;
+        }
+
+        .agent-cta-btn:hover {
+            background: white;
+            color: var(--primary);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--light-gray);
+            padding: 60px;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-content {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 60px;
+        }
+
+        .footer-brand .logo {
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .footer-text {
+            font-size: 14px;
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        .footer-title {
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: var(--gray);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.8);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            max-width: 500px;
+            width: 100%;
+            padding: 50px;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .modal-title {
+            font-size: 32px;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid var(--border);
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: var(--accent);
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero { grid-template-columns: 1fr; }
+            .hero-image { height: 500px; }
+            .search-form { grid-template-columns: 1fr 1fr; }
+            .properties-grid { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
+            .toaster-card { width: calc(100% - 60px); }
+            .footer-content { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .navbar { padding: 15px 20px; }
+            .nav-links { display: none; }
+            .hero { padding: 0 20px; margin-top: 60px; }
+            .search-container { padding: 30px 20px; }
+            .search-form { grid-template-columns: 1fr; }
+            .filters { padding: 20px; }
+            .properties { padding: 60px 20px; }
+            .agent-cta { padding: 60px 20px; }
+            .footer { padding: 40px 20px; }
+            .footer-content { grid-template-columns: 1fr; gap: 40px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">ROYALTY</a>
+            <div class="nav-links">
+                <a href="#buy">Buy</a>
+                <a href="#rent">Rent</a>
+                <a href="#sell">Sell</a>
+                <a href="#agents">Find an Agent</a>
+                <a href="#listings">List Property</a>
+            </div>
+            <div class="nav-buttons">
+                <button class="btn btn-outline" onclick="openModal('login')">Sign In</button>
+                <button class="btn btn-primary" onclick="openModal('list')">List Property</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <span class="hero-label">Luxury Real Estate</span>
+            <h1 class="hero-title">Find Your Perfect Home</h1>
+            <p class="hero-text">Discover exceptional properties in the world's most prestigious locations. From modern penthouses to countryside estates.</p>
+            <div style="display: flex; gap: 15px;">
+                <button class="btn btn-primary" onclick="scrollToSearch()">Search Properties</button>
+                <button class="btn btn-outline" onclick="openModal('agent')">Hire an Agent</button>
+            </div>
+        </div>
+        <div class="hero-image"></div>
+    </section>
+
+    <!-- Search Section -->
+    <section class="search-container" id="search">
+        <div class="search-wrapper">
+            <h2 class="search-title">Search Properties</h2>
+            <form class="search-form" onsubmit="handleSearch(event)">
+                <div class="search-field">
+                    <label>Location</label>
+                    <input type="text" placeholder="Enter city, neighborhood, or address" id="locationInput">
+                </div>
+                <div class="search-field">
+                    <label>Property Type</label>
+                    <select id="propertyType">
+                        <option value="">All Types</option>
+                        <option value="house">House</option>
+                        <option value="apartment">Apartment</option>
+                        <option value="villa">Villa</option>
+                        <option value="penthouse">Penthouse</option>
+                        <option value="mansion">Mansion</option>
+                    </select>
+                </div>
+                <div class="search-field">
+                    <label>Price Range</label>
+                    <select id="priceRange">
+                        <option value="">Any Price</option>
+                        <option value="0-500000">$0 - $500,000</option>
+                        <option value="500000-1000000">$500,000 - $1M</option>
+                        <option value="1000000-5000000">$1M - $5M</option>
+                        <option value="5000000+">$5M+</option>
+                    </select>
+                </div>
+                <div class="search-field">
+                    <label>Bedrooms</label>
+                    <select id="bedrooms">
+                        <option value="">Any</option>
+                        <option value="1">1+ Bedroom</option>
+                        <option value="2">2+ Bedrooms</option>
+                        <option value="3">3+ Bedrooms</option>
+                        <option value="4">4+ Bedrooms</option>
+                        <option value="5">5+ Bedrooms</option>
+                    </select>
+                </div>
+                <button type="submit" class="search-btn">
+                    <i class="fas fa-search"></i> Search
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Filters -->
+    <section class="filters">
+        <div class="filters-wrapper">
+            <div class="filter-tag active" onclick="toggleFilter(this)">
+                <i class="fas fa-filter"></i> All Properties
+            </div>
+            <div class="filter-tag" onclick="toggleFilter(this)">
+                <i class="fas fa-home"></i> For Sale
+            </div>
+            <div class="filter-tag" onclick="toggleFilter(this)">
+                <i class="fas fa-key"></i> For Rent
+            </div>
+            <div class="filter-tag" onclick="toggleFilter(this)">
+                <i class="fas fa-dollar-sign"></i> Price: Low to High
+            </div>
+            <div class="filter-tag" onclick="toggleFilter(this)">
+                <i class="fas fa-dollar-sign"></i> Price: High to Low
+            </div>
+            <div class="filter-tag" onclick="toggleFilter(this)">
+                <i class="fas fa-calendar"></i> Newest First
+            </div>
+        </div>
+    </section>
+
+    <!-- Properties Grid -->
+    <section class="properties" id="properties">
+        <div class="section-header">
+            <div>
+                <h2 class="section-title">Featured Properties</h2>
+                <p class="section-subtitle">Handpicked luxury residences</p>
+            </div>
+            <button class="btn btn-outline" onclick="showAllProperties()">View All (247)</button>
+        </div>
+
+        <div class="properties-grid">
+            <!-- Property 1 -->
+            <div class="property-card" onclick="viewProperty(1)">
+                <div class="property-image">
+                    <img src="https://images.unsplash.com/photo-1613977257363-707ba9348227?w=800" alt="Property">
+                    <span class="property-badge">For Sale</span>
+                    <div class="property-favorite" onclick="toggleFavorite(event, this)">
+                        <i class="far fa-heart"></i>
+                    </div>
+                </div>
+                <div class="property-info">
+                    <div class="property-price">$2,500,000</div>
+                    <div class="property-location">
+                        <i class="fas fa-map-marker-alt"></i> Beverly Hills, California
+                    </div>
+                    <div class="property-features">
+                        <span><i class="fas fa-bed"></i> 5 Beds</span>
+                        <span><i class="fas fa-bath"></i> 6 Baths</span>
+                        <span><i class="fas fa-ruler-combined"></i> 6,500 sqft</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Property 2 -->
+            <div class="property-card" onclick="viewProperty(2)">
+                <div class="property-image">
+                    <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800" alt="Property">
+                    <span class="property-badge" style="background: #4CAF50; color: white;">For Rent</span>
+                    <div class="property-favorite" onclick="toggleFavorite(event, this)">
+                        <i class="far fa-heart"></i>
+                    </div>
+                </div>
+                <div class="property-info">
+                    <div class="property-price">$8,500<span style="font-size: 16px; color: var(--gray);">/mo</span></div>
+                    <div class="property-location">
+                        <i class="fas fa-map-marker-alt"></i> Manhattan, New York
+                    </div>
+                    <div class="property-features">
+                        <span><i class="fas fa-bed"></i> 3 Beds</span>
+                        <span><i class="fas fa-bath"></i> 3 Baths</span>
+                        <span><i class="fas fa-ruler-combined"></i> 2,800 sqft</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Property 3 -->
+            <div class="property-card" onclick="viewProperty(3)">
+                <div class="property-image">
+                    <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800" alt="Property">
+                    <span class="property-badge">For Sale</span>
+                    <div class="property-favorite" onclick="toggleFavorite(event, this)">
+                        <i class="far fa-heart"></i>
+                    </div>
+                </div>
+                <div class="property-info">
+                    <div class="property-price">$4,200,000</div>
+                    <div class="property-location">
+                        <i class="fas fa-map-marker-alt"></i> Malibu, California
+                    </div>
+                    <div class="property-features">
+                        <span><i class="fas fa-bed"></i> 4 Beds</span>
+                        <span><i class="fas fa-bath"></i> 5 Baths</span>
+                        <span><i class="fas fa-ruler-combined"></i> 4,200 sqft</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Property 4 -->
+            <div class="property-card" onclick="viewProperty(4)">
+                <div class="property-image">
+                    <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800" alt="Property">
+                    <span class="property-badge" style="background: #4CAF50; color: white;">For Rent</span>
+                    <div class="property-favorite" onclick="toggleFavorite(event, this)">
+                        <i class="far fa-heart"></i>
+                    </div>
+                </div>
+                <div class="property-info">
+                    <div class="property-price">$12,000<span style="font-size: 16px; color: var(--gray);">/mo</span></div>
+                    <div class="property-location">
+                        <i class="fas fa-map-marker-alt"></i> Miami Beach, Florida
+                    </div>
+                    <div class="property-features">
+                        <span><i class="fas fa-bed"></i> 5 Beds</span>
+                        <span><i class="fas fa-bath"></i> 6 Baths</span>
+                        <span><i class="fas fa-ruler-combined"></i> 5,500 sqft</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Property 5 -->
+            <div class="property-card" onclick="viewProperty(5)">
+                <div class="property-image">
+                    <img src="https://images.unsplash.com/photo-1600573472550-8090b5e0745e?w=800" alt="Property">
+                    <span class="property-badge">For Sale</span>
+                    <div class="property-favorite" onclick="toggleFavorite(event, this)">
+                        <i class="far fa-heart"></i>
+                    </div>
+                </div>
+                <div class="property-info">
+                    <div class="property-price">$6,800,000</div>
+                    <div class="property-location">
+                        <i class="fas fa-map-marker-alt"></i> The Hamptons, New York
+                    </div>
+                    <div class="property-features">
+                        <span><i class="fas fa-bed"></i> 6 Beds</span>
+                        <span><i class="fas fa-bath"></i> 7 Baths</span>
+                        <span><i class="fas fa-ruler-combined"></i> 8,000 sqft</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Property 6 -->
+            <div class="property-card" onclick="viewProperty(6)">
+                <div class="property-image">
+                    <img src="https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=800" alt="Property">
+                    <span class="property-badge">For Sale</span>
+                    <div class="property-favorite" onclick="toggleFavorite(event, this)">
+                        <i class="far fa-heart"></i>
+                    </div>
+                </div>
+                <div class="property-info">
+                    <div class="property-price">$3,900,000</div>
+                    <div class="property-location">
+                        <i class="fas fa-map-marker-alt"></i> Bel Air, California
+                    </div>
+                    <div class="property-features">
+                        <span><i class="fas fa-bed"></i> 5 Beds</span>
+                        <span><i class="fas fa-bath"></i> 6 Baths</span>
+                        <span><i class="fas fa-ruler-combined"></i> 5,800 sqft</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Agent CTA -->
+    <section class="agent-cta">
+        <h2 class="agent-cta-title">Need Help Finding Your Dream Home?</h2>
+        <p class="agent-cta-text">Our expert agents know the market inside and out. Let them guide you to the perfect property.</p>
+        <a href="#" class="agent-cta-btn" onclick="openModal('agent'); return false;">Hire an Agent</a>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <a href="#" class="logo">ROYALTY</a>
+                <p class="footer-text">Your trusted partner in luxury real estate. We help you buy, sell, and rent exceptional properties worldwide.</p>
+            </div>
+            <div>
+                <h4 class="footer-title">Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Buy Property</a></li>
+                    <li><a href="#">Rent Property</a></li>
+                    <li><a href="#">Sell Property</a></li>
+                    <li><a href="#">Find an Agent</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="footer-title">Resources</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Market Reports</a></li>
+                    <li><a href="#">Buying Guide</a></li>
+                    <li><a href="#">Selling Guide</a></li>
+                    <li><a href="#">Mortgage Calculator</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="footer-title">Contact</h4>
+                <ul class="footer-links">
+                    <li><a href="#">support@royalty.com</a></li>
+                    <li><a href="#">+1 (888) 123-4567</a></li>
+                    <li><a href="#">9876 Luxury Lane</a></li>
+                    <li><a href="#">Beverly Hills, CA 90210</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toaster Toggle Button -->
+    <div class="toaster-toggle" id="toasterToggle" onclick="toggleToaster()">
+        <i class="fas fa-lightbulb"></i>
+    </div>
+
+    <!-- Toaster Card - Tips -->
+    <div class="toaster-card" id="toasterCard">
+        <div class="toaster-header">
+            <div class="toaster-title">
+                <i class="fas fa-lightbulb"></i>
+                Real Estate Tips
+            </div>
+            <button class="toaster-close" onclick="toggleToaster()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="toaster-content">
+            <div class="toaster-tip" id="tipContent">
+                <strong>💡 Buying Tip:</strong> Get pre-approved for a mortgage before house hunting. It strengthens your offer and shows sellers you're serious.
+            </div>
+            <div style="font-size: 12px; color: var(--gray); margin-bottom: 10px;">Tip #<span id="tipNumber">1</span> of 10</div>
+        </div>
+        <div class="toaster-actions">
+            <button class="toaster-btn toaster-btn-secondary" onclick="prevTip()">
+                <i class="fas fa-chevron-left"></i> Previous
+            </button>
+            <button class="toaster-btn toaster-btn-primary" onclick="nextTip()">
+                Next Tip <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('login')">
+                <i class="fas fa-times"></i>
+            </button>
+            <h2 class="modal-title">Sign In</h2>
+            <form onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" placeholder="you@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" placeholder="Enter your password" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; padding: 15px;">Sign In</button>
+                <p style="text-align: center; margin-top: 20px; font-size: 14px; color: var(--gray);">
+                    Don't have an account? <a href="#" style="color: var(--accent); text-decoration: none;">Sign up</a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <!-- List Property Modal -->
+    <div class="modal" id="listModal">
+        <div class="modal-content" style="max-width: 600px;">
+            <button class="modal-close" onclick="closeModal('list')">
+                <i class="fas fa-times"></i>
+            </button>
+            <h2 class="modal-title">List Your Property</h2>
+            <form onsubmit="handleListProperty(event)">
+                <div class="form-group">
+                    <label>Property Type</label>
+                    <select required>
+                        <option value="">Select type</option>
+                        <option value="sale">For Sale</option>
+                        <option value="rent">For Rent</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Property Address</label>
+                    <input type="text" placeholder="Enter full address" required>
+                </div>
+                <div class="form-group">
+                    <label>Price</label>
+                    <input type="text" placeholder="$0.00" required>
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea placeholder="Describe your property..." required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; padding: 15px;">Submit Listing</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Hire Agent Modal -->
+    <div class="modal" id="agentModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('agent')">
+                <i class="fas fa-times"></i>
+            </button>
+            <h2 class="modal-title">Hire an Agent</h2>
+            <form onsubmit="handleHireAgent(event)">
+                <div class="form-group">
+                    <label>Your Name</label>
+                    <input type="text" placeholder="Full name" required>
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" placeholder="you@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label>Phone</label>
+                    <input type="tel" placeholder="Phone number" required>
+                </div>
+                <div class="form-group">
+                    <label>Location Preference</label>
+                    <input type="text" placeholder="Where are you looking to buy/rent?" required>
+                </div>
+                <div class="form-group">
+                    <label>Budget Range</label>
+                    <select required>
+                        <option value="">Select budget</option>
+                        <option value="500k-1m">$500K - $1M</option>
+                        <option value="1m-5m">$1M - $5M</option>
+                        <option value="5m+">$5M+</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Message</label>
+                    <textarea placeholder="Tell us about your needs..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; padding: 15px;">Request Agent</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Scroll to search
+        function scrollToSearch() {
+            document.getElementById('search').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Handle search
+        function handleSearch(e) {
+            e.preventDefault();
+            const location = document.getElementById('locationInput').value;
+            const type = document.getElementById('propertyType').value;
+            const price = document.getElementById('priceRange').value;
+            const beds = document.getElementById('bedrooms').value;
+            
+            alert(`Searching for properties in ${location || 'all locations'}\nType: ${type || 'All'}\nPrice: ${price || 'Any'}\nBeds: ${beds || 'Any'}`);
+        }
+
+        // Toggle filter
+        function toggleFilter(element) {
+            document.querySelectorAll('.filter-tag').forEach(tag => {
+                tag.classList.remove('active');
+            });
+            element.classList.add('active');
+        }
+
+        // Toggle favorite
+        function toggleFavorite(event, element) {
+            event.stopPropagation();
+            const icon = element.querySelector('i');
+            if (icon.classList.contains('far')) {
+                icon.classList.remove('far');
+                icon.classList.add('fas');
+                element.style.background = '#c5a059';
+            } else {
+                icon.classList.remove('fas');
+                icon.classList.add('far');
+                element.style.background = 'white';
+            }
+        }
+
+        // View property
+        function viewProperty(id) {
+            alert(`Viewing property #${id}\nIn a real app, this would navigate to the property details page.`);
+        }
+
+        // Show all properties
+        function showAllProperties() {
+            alert('Showing all 247 properties');
+        }
+
+        // Toaster functionality
+        const tips = [
+            { type: 'Buying', text: 'Get pre-approved for a mortgage before house hunting. It strengthens your offer and shows sellers you\'re serious.' },
+            { type: 'Selling', text: 'Stage your home to highlight its best features. First impressions matter - consider professional photography.' },
+            { type: 'Renting', text: 'Always read the lease carefully before signing. Understand terms about security deposits, maintenance, and termination.' },
+            { type: 'Buying', text: 'Don\'t skip the home inspection. It can save you thousands by revealing hidden issues before purchase.' },
+            { type: 'Investment', text: 'Location is everything in real estate. A good property in a great location will always appreciate.' },
+            { type: 'Selling', text: 'Price your home competitively from the start. Overpricing can lead to your property sitting on the market.' },
+            { type: 'Buying', text: 'Get a buyer\'s agent. They work for you and can help negotiate the best deal.' },
+            { type: 'Renting', text: 'Document the condition of the rental with photos before moving in to protect your security deposit.' },
+            { type: 'Market', text: 'The best time to buy is when you\'re financially ready, not when the market is "perfect".' },
+            { type: 'General', text: 'Work with a reputable agent who knows your target area inside and out.' }
+        ];
+
+        let currentTip = 0;
+
+        function toggleToaster() {
+            const card = document.getElementById('toasterCard');
+            const toggle = document.getElementById('toasterToggle');
+            card.classList.toggle('show');
+            toggle.classList.toggle('hide');
+        }
+
+        function nextTip() {
+            currentTip = (currentTip + 1) % tips.length;
+            updateTip();
+        }
+
+        function prevTip() {
+            currentTip = (currentTip - 1 + tips.length) % tips.length;
+            updateTip();
+        }
+
+        function updateTip() {
+            const tip = tips[currentTip];
+            document.getElementById('tipContent').innerHTML = `<strong>💡 ${tip.type} Tip:</strong> ${tip.text}`;
+            document.getElementById('tipNumber').textContent = currentTip + 1;
+        }
+
+        // Modal functions
+        function openModal(type) {
+            document.getElementById(type + 'Modal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(type) {
+            document.getElementById(type + 'Modal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Handle forms
+        function handleLogin(e) {
+            e.preventDefault();
+            alert('Login successful! (Demo)');
+            closeModal('login');
+        }
+
+        function handleListProperty(e) {
+            e.preventDefault();
+            alert('Property listing submitted! Our team will review it shortly.');
+            closeModal('list');
+        }
+
+        function handleHireAgent(e) {
+            e.preventDefault();
+            alert('Agent request submitted! A local expert will contact you within 24 hours.');
+            closeModal('agent');
+        }
+
+        // Close modals on outside click
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        // Show toaster after 3 seconds
+        setTimeout(() => {
+            toggleToaster();
+        }, 3000);
+    </script>
+</body>
+</html>

@@ -78,26 +78,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_property'])) {
     }
 }
 
-$page_title = "List Your Property | Panda Realty";
+$page_title = "List Your Property with Perpetuah Realtor | Panda Realty Eldoret";
+$page_description = "Showcase your plots, studio apartments, residential homes, or commercial real estate to thousands of verified property buyers in Eldoret, Kenya.";
+$page_keywords = "list property Eldoret, sell plot Eldoret, rent studio apartment Eldoret, real estate agent Eldoret";
+
 require_once __DIR__ . '/includes/header.php';
 require_once __DIR__ . '/includes/nav.php';
 ?>
 
-<div style="margin-top: 100px; padding: 60px 20px; max-width: 960px; margin-left: auto; margin-right: auto;">
+<div class="list-property-container">
     
-    <div style="text-align: center; margin-bottom: 40px;">
-        <span style="color: var(--accent); font-weight: 700; text-transform: uppercase; letter-spacing: 2px; font-size: 12px; margin-bottom: 8px; display: block;">
+    <div style="text-align: center; margin-bottom: clamp(25px, 4vw, 40px);">
+        <span style="color: var(--accent); font-weight: 700; text-transform: uppercase; letter-spacing: 2px; font-size: 11px; margin-bottom: 8px; display: block;">
             Reach Thousands of Verified Eldoret Buyers
         </span>
-        <h1 class="font-serif" style="font-size: 38px; margin-bottom: 10px;">Apply to List Your Property</h1>
-        <p style="color: var(--gray); font-size: 15px; max-width: 650px; margin: 0 auto;">
+        <h1 class="font-serif" style="font-size: clamp(26px, 4vw, 38px); margin-bottom: 8px;">Apply to List Your Property</h1>
+        <p style="color: var(--gray); font-size: clamp(13.5px, 1.8vw, 15px); max-width: 650px; margin: 0 auto;">
             Showcase your plots, studio apartments, residential homes, or commercial parcels with Perpetuah Realtor.
         </p>
     </div>
 
     <?php if (!empty($success)): ?>
-        <div style="background: rgba(16, 185, 129, 0.1); border: 1.5px solid #10b981; color: #065f46; padding: 20px; border-radius: 8px; margin-bottom: 30px; display: flex; align-items: center; gap: 12px;">
-            <i class="fas fa-check-circle" style="font-size: 24px;"></i>
+        <div style="background: rgba(16, 185, 129, 0.1); border: 1.5px solid #10b981; color: #065f46; padding: 18px; border-radius: 8px; margin-bottom: 25px; display: flex; align-items: center; gap: 12px; font-size: 14px;">
+            <i class="fas fa-check-circle" style="font-size: 24px; flex-shrink: 0;"></i>
             <div>
                 <strong><?= htmlspecialchars($success) ?></strong><br>
                 <a href="<?= htmlspecialchars(app_path('properties')) ?>" style="color: var(--accent); font-weight: 600;">View in Property Catalog &rarr;</a>
@@ -106,34 +109,34 @@ require_once __DIR__ . '/includes/nav.php';
     <?php endif; ?>
 
     <?php if (!empty($error)): ?>
-        <div style="background: rgba(239, 68, 68, 0.1); border: 1.5px solid #ef4444; color: #991b1b; padding: 18px; border-radius: 8px; margin-bottom: 30px; display: flex; align-items: center; gap: 12px;">
-            <i class="fas fa-exclamation-triangle" style="font-size: 20px;"></i>
+        <div style="background: rgba(239, 68, 68, 0.1); border: 1.5px solid #ef4444; color: #991b1b; padding: 16px; border-radius: 8px; margin-bottom: 25px; display: flex; align-items: center; gap: 12px; font-size: 14px;">
+            <i class="fas fa-exclamation-triangle" style="font-size: 20px; flex-shrink: 0;"></i>
             <span><?= htmlspecialchars($error) ?></span>
         </div>
     <?php endif; ?>
 
     <?php if (!is_logged_in()): ?>
         <!-- Sign In or Register to List Property Box -->
-        <div style="background: white; border: 1px solid var(--border); border-radius: 12px; padding: 40px; box-shadow: var(--card-shadow); margin-bottom: 40px; text-align: center;">
-            <i class="fas fa-user-lock" style="font-size: 44px; color: var(--accent); margin-bottom: 15px;"></i>
-            <h3 class="font-serif" style="font-size: 24px; margin-bottom: 8px;">Please Sign In to Submit Your Listing</h3>
-            <p style="color: var(--gray); font-size: 14px; margin-bottom: 25px;">
+        <div class="auth-card" style="margin: 0 auto 30px; text-align: center; max-width: 560px;">
+            <i class="fas fa-user-lock" style="font-size: 40px; color: var(--accent); margin-bottom: 12px;"></i>
+            <h3 class="font-serif" style="font-size: 22px; margin-bottom: 8px;">Please Sign In to Submit Your Listing</h3>
+            <p style="color: var(--gray); font-size: 13.5px; margin-bottom: 22px;">
                 Create a free client account or log in to list and manage your properties.
             </p>
 
-            <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
-                <a href="<?= htmlspecialchars(app_path('login?redirect=list-property')) ?>" class="btn btn-gold" style="padding: 12px 28px;">
+            <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+                <a href="<?= htmlspecialchars(app_path('login?redirect=list-property')) ?>" class="btn btn-gold" style="padding: 11px 24px;">
                     <i class="fas fa-sign-in-alt"></i> Sign In to Account
                 </a>
             </div>
         </div>
     <?php else: ?>
         <!-- Client Listing Form -->
-        <form action="<?= htmlspecialchars(app_path('list-property')) ?>" method="POST" enctype="multipart/form-data" style="background: white; border: 1px solid var(--border); border-radius: 12px; padding: 40px; box-shadow: var(--card-shadow);">
+        <form action="<?= htmlspecialchars(app_path('list-property')) ?>" method="POST" enctype="multipart/form-data" class="contact-card">
             <input type="hidden" name="csrf_token" value="<?= get_csrf_token() ?>">
             <input type="hidden" name="submit_property" value="1">
 
-            <h3 class="font-serif" style="font-size: 20px; color: var(--accent); margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 10px;">
+            <h3 class="font-serif" style="font-size: 19px; color: var(--accent); margin-bottom: 18px; border-bottom: 1px solid var(--border); padding-bottom: 8px;">
                 <i class="fas fa-home"></i> 1. Property Details
             </h3>
             
@@ -142,7 +145,7 @@ require_once __DIR__ . '/includes/nav.php';
                 <input type="text" name="title" placeholder="e.g. Executive 1-Bedroom Studio Apartment in Pioneer Estate" required>
             </div>
 
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div class="form-grid-2">
                 <div class="form-group">
                     <label>Property Type *</label>
                     <select name="type" required>
@@ -164,7 +167,7 @@ require_once __DIR__ . '/includes/nav.php';
                 </div>
             </div>
 
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div class="form-grid-2">
                 <div class="form-group">
                     <label>Asking Price in KSh (KES) *</label>
                     <input type="number" step="1000" name="price_kes" placeholder="e.g. 2500000" required>
@@ -176,7 +179,7 @@ require_once __DIR__ . '/includes/nav.php';
                 </div>
             </div>
 
-            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;">
+            <div class="form-grid-3">
                 <div class="form-group">
                     <label>Bedrooms</label>
                     <input type="number" name="bedrooms" value="1" min="0">
@@ -196,14 +199,14 @@ require_once __DIR__ . '/includes/nav.php';
                 <input type="text" name="address" placeholder="e.g. 500m from Eldoret-Nakuru Highway, Annex Scheme">
             </div>
 
-            <h3 class="font-serif" style="font-size: 20px; color: var(--accent); margin: 30px 0 20px; border-bottom: 1px solid var(--border); padding-bottom: 10px;">
+            <h3 class="font-serif" style="font-size: 19px; color: var(--accent); margin: 25px 0 18px; border-bottom: 1px solid var(--border); padding-bottom: 8px;">
                 <i class="fas fa-images"></i> 2. Property Visuals (Upload Up to 3 Photos + 1 Video)
             </h3>
 
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 15px; margin-bottom: 20px;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: 14px; margin-bottom: 18px;">
                 <!-- Image 1 -->
-                <div style="background: #f8fafc; border: 1.5px dashed var(--border); border-radius: 8px; padding: 15px;">
-                    <label style="font-weight: 700; color: #1e293b; display: block; margin-bottom: 6px; font-size: 13px;">
+                <div style="background: #f8fafc; border: 1.5px dashed var(--border); border-radius: 8px; padding: 14px;">
+                    <label style="font-weight: 700; color: #1e293b; display: block; margin-bottom: 6px; font-size: 12px;">
                         Image 1: Cover Photo *
                     </label>
                     <input type="file" name="image_file_1" accept="image/*" style="margin-bottom: 6px; width: 100%; font-size: 12px;">
@@ -211,8 +214,8 @@ require_once __DIR__ . '/includes/nav.php';
                 </div>
 
                 <!-- Image 2 -->
-                <div style="background: #f8fafc; border: 1.5px dashed var(--border); border-radius: 8px; padding: 15px;">
-                    <label style="font-weight: 700; color: #1e293b; display: block; margin-bottom: 6px; font-size: 13px;">
+                <div style="background: #f8fafc; border: 1.5px dashed var(--border); border-radius: 8px; padding: 14px;">
+                    <label style="font-weight: 700; color: #1e293b; display: block; margin-bottom: 6px; font-size: 12px;">
                         Image 2: Living / Interior
                     </label>
                     <input type="file" name="image_file_2" accept="image/*" style="margin-bottom: 6px; width: 100%; font-size: 12px;">
@@ -220,8 +223,8 @@ require_once __DIR__ . '/includes/nav.php';
                 </div>
 
                 <!-- Image 3 -->
-                <div style="background: #f8fafc; border: 1.5px dashed var(--border); border-radius: 8px; padding: 15px;">
-                    <label style="font-weight: 700; color: #1e293b; display: block; margin-bottom: 6px; font-size: 13px;">
+                <div style="background: #f8fafc; border: 1.5px dashed var(--border); border-radius: 8px; padding: 14px;">
+                    <label style="font-weight: 700; color: #1e293b; display: block; margin-bottom: 6px; font-size: 12px;">
                         Image 3: Compound / Plot
                     </label>
                     <input type="file" name="image_file_3" accept="image/*" style="margin-bottom: 6px; width: 100%; font-size: 12px;">
@@ -230,8 +233,8 @@ require_once __DIR__ . '/includes/nav.php';
             </div>
 
             <!-- Single Video URL -->
-            <div class="form-group" style="background: #fdfbf7; border: 1px solid rgba(195,154,77,0.3); border-radius: 8px; padding: 15px;">
-                <label style="font-weight: 700; color: #1e293b; display: block; margin-bottom: 6px; font-size: 13px;">
+            <div class="form-group" style="background: #fdfbf7; border: 1px solid rgba(195,154,77,0.3); border-radius: 8px; padding: 14px;">
+                <label style="font-weight: 700; color: #1e293b; display: block; margin-bottom: 6px; font-size: 12px;">
                     <i class="fab fa-youtube" style="color: #ef4444;"></i> Single Property Video Tour Link
                 </label>
                 <input type="url" name="video_url" placeholder="e.g. YouTube, TikTok, Reels, Facebook, or MP4 link">
@@ -239,10 +242,10 @@ require_once __DIR__ . '/includes/nav.php';
 
             <div class="form-group">
                 <label>Detailed Property Description *</label>
-                <textarea name="description" rows="5" placeholder="Describe title deed status, water & electricity connectivity, security, nearby schools, and amenities..." required></textarea>
+                <textarea name="description" rows="4" placeholder="Describe title deed status, water & electricity connectivity, security, nearby schools, and amenities..." required></textarea>
             </div>
 
-            <button type="submit" class="btn btn-gold" style="width: 100%; padding: 16px; font-size: 14px; font-weight: 700; margin-top: 10px;">
+            <button type="submit" class="btn btn-gold" style="width: 100%; padding: 14px; font-size: 13.5px; font-weight: 700; margin-top: 10px;">
                 <i class="fas fa-check-circle"></i> Submit Property Listing Application
             </button>
         </form>

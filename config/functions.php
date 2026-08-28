@@ -38,7 +38,7 @@ function get_app_base_path() {
         return $base_path;
     }
 
-    $configured = trim((string)panda_env('APP_BASE_PATH', '/pandareality'));
+    $configured = trim((string)panda_env('APP_BASE_PATH', '/pandarealty'));
 
     if ($configured === '' || $configured === '/') {
         $base_path = '';

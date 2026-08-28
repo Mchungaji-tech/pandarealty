@@ -93,26 +93,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-$page_title = "Contact Perpetuah | Panda Realty Eldoret";
+$page_title = "Contact Perpetuah Realtor | Panda Realty Eldoret Office";
+$page_description = "Get in touch with Perpetuah Realtor at KVDA Plaza, Eldoret for freehold titled plots in Annex, executive studio apartments in Pioneer, and Elgon View homes.";
+$page_keywords = "contact Panda Realty, Perpetuah Realtor phone, real estate office Eldoret, KVDA plaza Eldoret, buy land Eldoret contact";
+
+$site_url = (is_https_request() ? 'https://' : 'http://') . ($_SERVER['HTTP_HOST'] ?? 'localhost') . app_path();
+$schema_json_ld_extra = [
+    [
+        "@context" => "https://schema.org",
+        "@type" => "ContactPage",
+        "name" => "Contact Perpetuah Realtor - Panda Realty",
+        "url" => $site_url . '/contact',
+        "description" => $page_description
+    ]
+];
+
 require_once __DIR__ . '/includes/header.php';
 require_once __DIR__ . '/includes/nav.php';
 ?>
 
-<div style="margin-top: 100px; padding: 60px; max-width: 1400px; margin-left: auto; margin-right: auto;">
+<div class="contact-container">
     
-    <div style="text-align: center; max-width: 800px; margin: 0 auto 50px;">
-        <span style="color: var(--accent); font-weight: 700; text-transform: uppercase; letter-spacing: 2px; font-size: 12px; margin-bottom: 10px; display: block;">
+    <div style="text-align: center; max-width: 800px; margin: 0 auto clamp(30px, 4vw, 50px);">
+        <span style="color: var(--accent); font-weight: 700; text-transform: uppercase; letter-spacing: 2px; font-size: 11px; margin-bottom: 8px; display: block;">
             Get in Touch with Eldoret's Property Authority
         </span>
-        <h1 class="font-serif" style="font-size: 42px; margin-bottom: 15px;">Let's Find Your Dream Home or Land</h1>
-        <p style="color: var(--gray); font-size: 16px;">
+        <h1 class="font-serif" style="font-size: clamp(28px, 4vw, 42px); margin-bottom: 12px;">Let's Find Your Dream Home or Land</h1>
+        <p style="color: var(--gray); font-size: clamp(14px, 1.8vw, 16px);">
             Have questions regarding titled plots in Annex, executive studio apartments, or luxury villas in Elgon View? Perpetuah and the Panda Realty team are here to assist.
         </p>
     </div>
 
     <?php if (!empty($success_msg)): ?>
-        <div style="background: rgba(16, 185, 129, 0.1); border: 1.5px solid #10b981; color: #065f46; padding: 18px 24px; border-radius: 8px; margin-bottom: 30px; display: flex; align-items: center; gap: 12px;">
-            <i class="fas fa-check-circle" style="font-size: 20px;"></i>
+        <div style="background: rgba(16, 185, 129, 0.1); border: 1.5px solid #10b981; color: #065f46; padding: 16px 20px; border-radius: 8px; margin-bottom: 25px; display: flex; align-items: center; gap: 12px; font-size: 14px;">
+            <i class="fas fa-check-circle" style="font-size: 20px; flex-shrink: 0;"></i>
             <span><?= htmlspecialchars($success_msg) ?></span>
         </div>
         <?php if ($followup_whatsapp_url !== ''): ?>
@@ -125,21 +139,21 @@ require_once __DIR__ . '/includes/nav.php';
     <?php endif; ?>
 
     <?php if (!empty($error_msg)): ?>
-        <div style="background: rgba(239, 68, 68, 0.1); border: 1.5px solid #ef4444; color: #991b1b; padding: 18px 24px; border-radius: 8px; margin-bottom: 30px; display: flex; align-items: center; gap: 12px;">
-            <i class="fas fa-exclamation-triangle" style="font-size: 20px;"></i>
+        <div style="background: rgba(239, 68, 68, 0.1); border: 1.5px solid #ef4444; color: #991b1b; padding: 16px 20px; border-radius: 8px; margin-bottom: 25px; display: flex; align-items: center; gap: 12px; font-size: 14px;">
+            <i class="fas fa-exclamation-triangle" style="font-size: 20px; flex-shrink: 0;"></i>
             <span><?= htmlspecialchars($error_msg) ?></span>
         </div>
     <?php endif; ?>
 
-    <div style="display: grid; grid-template-columns: 1fr 1.2fr; gap: 60px; margin-bottom: 60px;">
+    <div class="contact-grid-wrap">
         <!-- Contact Details & Profile -->
         <div>
-            <div style="background: white; border: 1px solid var(--border); border-radius: 12px; padding: 35px; box-shadow: var(--card-shadow); margin-bottom: 30px;">
-                <div style="display: flex; gap: 20px; align-items: center; margin-bottom: 25px;">
-                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=160" alt="Perpetuah Realtor" style="width: 75px; height: 75px; border-radius: 50%; border: 3px solid var(--accent); object-fit: cover;">
+            <div class="contact-card" style="margin-bottom: 25px;">
+                <div style="display: flex; gap: 16px; align-items: center; margin-bottom: 22px;">
+                    <img src="<?= htmlspecialchars(normalize_media_url($realtor_image ?? 'assets/images/perpetuah.jpg')) ?>" onerror="this.src='https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=160'" alt="Perpetuah Realtor" style="width: 70px; height: 70px; border-radius: 50%; border: 3px solid var(--accent); object-fit: cover; flex-shrink: 0;">
                     <div>
-                        <h3 class="font-serif" style="font-size: 22px; margin-bottom: 4px;">Perpetuah Chepchirchir</h3>
-                        <p style="font-size: 13px; color: var(--accent); font-weight: 700; text-transform: uppercase;">Lead Eldoret Realtor</p>
+                        <h3 class="font-serif" style="font-size: 20px; margin-bottom: 2px;">Perpetuah Chepchirchir</h3>
+                        <p style="font-size: 11px; color: var(--accent); font-weight: 700; text-transform: uppercase;">Lead Eldoret Realtor</p>
                     </div>
                 </div>
 
@@ -186,9 +200,9 @@ require_once __DIR__ . '/includes/nav.php';
         </div>
 
         <!-- Interactive Contact Form -->
-        <div style="background: white; border: 1px solid var(--border); border-radius: 12px; padding: 40px; box-shadow: var(--card-shadow);">
-            <h3 class="font-serif" style="font-size: 26px; margin-bottom: 8px;">Send an Inquiry</h3>
-            <p style="font-size: 14px; color: var(--gray); margin-bottom: 25px;">
+        <div class="contact-card">
+            <h3 class="font-serif" style="font-size: 24px; margin-bottom: 6px;">Send an Inquiry</h3>
+            <p style="font-size: 14px; color: var(--gray); margin-bottom: 22px;">
                 Fill in the form below and we will respond within 1 business hour.
             </p>
 
@@ -200,7 +214,7 @@ require_once __DIR__ . '/includes/nav.php';
                     <input type="text" name="name" placeholder="e.g. Mary Jepkemboi" required>
                 </div>
 
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                <div class="form-grid-2">
                     <div class="form-group">
                         <label>Phone Number (WhatsApp) *</label>
                         <input type="tel" name="phone" placeholder="0708 289 852" required>
@@ -211,7 +225,7 @@ require_once __DIR__ . '/includes/nav.php';
                     </div>
                 </div>
 
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                <div class="form-grid-2">
                     <div class="form-group">
                         <label>Preferred Contact Channel</label>
                         <select name="preferred_contact">

@@ -20,4 +20,4 @@ foreach ($results as $t => $s) {
     echo "  - $t: $s\n";
 }
 echo "\nAll required tables created. Visit:\n";
-echo "  /pandareality/admin/choose-login.php\n";
+echo "  /pandarealty/admin/choose-login.php\n";

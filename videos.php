@@ -87,28 +87,46 @@ if ($selected_video_id > 0) {
     }
 }
 
-$page_title = "Video Library & TikTok Reels | Panda Realty";
+$page_title = "Eldoret Property Video Tours & TikTok Reels | Panda Realty";
+$page_description = "Watch virtual video walkthroughs, drone aerial plot surveys, and TikTok reels of prime real estate, studio apartments, and land for sale in Eldoret with Perpetuah Realtor.";
+$page_keywords = "Eldoret real estate videos, Panda Realty tiktok, plot tours Eldoret, studio apartments walkthrough, Perpetuah realtor video";
+
+$site_url = (is_https_request() ? 'https://' : 'http://') . ($_SERVER['HTTP_HOST'] ?? 'localhost') . app_path();
+$schema_json_ld_extra = [
+    [
+        "@context" => "https://schema.org",
+        "@type" => "VideoObject",
+        "name" => $active_video['title'],
+        "description" => "Virtual property tour for " . $active_video['title'] . " located in " . $active_video['location'] . ", Eldoret.",
+        "thumbnailUrl" => [
+            preg_match('#^https?://#i', $active_video['thumbnail']) ? $active_video['thumbnail'] : ($site_url . '/' . ltrim($active_video['thumbnail'], '/'))
+        ],
+        "uploadDate" => date('Y-m-d'),
+        "embedUrl" => $active_video['video_url']
+    ]
+];
+
 require_once __DIR__ . '/includes/header.php';
 require_once __DIR__ . '/includes/nav.php';
 ?>
 
-<div style="margin-top: 100px; padding: 40px 20px; max-width: 1300px; margin-left: auto; margin-right: auto;">
+<div class="videos-container">
     
     <!-- Top Mode Switcher Bar -->
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; flex-wrap: wrap; gap: 15px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; flex-wrap: wrap; gap: 15px;">
         <div>
             <span style="color: var(--accent); font-weight: 700; text-transform: uppercase; letter-spacing: 2px; font-size: 11px; display: block; margin-bottom: 4px;">
                 Virtual Property Tours &amp; Reels
             </span>
-            <h1 class="font-serif" style="font-size: 32px; margin: 0; color: #0f172a;">Panda Realty Video Experience</h1>
+            <h1 class="font-serif" style="font-size: clamp(24px, 4vw, 32px); margin: 0; color: #0f172a;">Panda Realty Video Experience</h1>
         </div>
 
         <!-- View Mode Switch Buttons -->
-        <div style="display: flex; gap: 10px; background: #ffffff; padding: 6px; border-radius: 30px; border: 1px solid var(--border); box-shadow: 0 2px 6px rgba(0,0,0,0.05);">
-            <a href="videos.php?mode=split&id=<?= $active_video['id'] ?>" class="btn" style="border-radius: 20px; padding: 8px 18px; font-size: 13px; font-weight: 700; <?= $view_mode === 'split' ? 'background: var(--accent); color: #000;' : 'background: transparent; color: var(--gray);' ?>">
+        <div style="display: flex; gap: 8px; background: #ffffff; padding: 4px; border-radius: 30px; border: 1px solid var(--border); box-shadow: 0 2px 6px rgba(0,0,0,0.05); flex-wrap: wrap;">
+            <a href="<?= htmlspecialchars(app_path('videos?mode=split&id=' . (int)$active_video['id'])) ?>" class="btn" style="border-radius: 20px; padding: 7px 16px; font-size: 12px; font-weight: 700; <?= $view_mode === 'split' ? 'background: var(--accent); color: #000;' : 'background: transparent; color: var(--gray);' ?>">
                 <i class="fas fa-columns"></i> Cinema Split View
             </a>
-            <a href="videos.php?mode=tiktok" class="btn" style="border-radius: 20px; padding: 8px 18px; font-size: 13px; font-weight: 700; <?= $view_mode === 'tiktok' ? 'background: #000000; color: #ffffff;' : 'background: transparent; color: var(--gray);' ?>">
+            <a href="<?= htmlspecialchars(app_path('videos?mode=tiktok')) ?>" class="btn" style="border-radius: 20px; padding: 7px 16px; font-size: 12px; font-weight: 700; <?= $view_mode === 'tiktok' ? 'background: #000000; color: #ffffff;' : 'background: transparent; color: var(--gray);' ?>">
                 <i class="fab fa-tiktok" style="color: #00f2fe;"></i> TikTok / Reels Feed
             </a>
         </div>
@@ -119,46 +137,46 @@ require_once __DIR__ . '/includes/nav.php';
         <!-- MODE 1: TIKTOK / REELS VERTICAL SNAP FEED -->
         <!-- ========================================== -->
         <div style="max-width: 440px; margin: 0 auto;">
-            <div style="text-align: center; margin-bottom: 20px;">
+            <div style="text-align: center; margin-bottom: 15px;">
                 <span style="background: #000; color: #fff; padding: 6px 16px; border-radius: 20px; font-size: 12px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px;">
                     <i class="fas fa-arrows-alt-v"></i> Scroll or Swipe Vertically to Explore
                 </span>
             </div>
 
             <!-- TikTok Snap Feed Container -->
-            <div class="tiktok-feed-container" style="height: 82vh; overflow-y: scroll; scroll-snap-type: y mandatory; border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.4); background: #000;">
+            <div class="tiktok-feed-container" style="height: 78vh; overflow-y: scroll; scroll-snap-type: y mandatory; border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.4); background: #000;">
                 <?php foreach ($video_items as $index => $item): ?>
-                    <div class="tiktok-card" style="height: 82vh; scroll-snap-align: start; position: relative; background: #0b0f19; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+                    <div class="tiktok-card" style="height: 78vh; scroll-snap-align: start; position: relative; background: #0b0f19; overflow: hidden; display: flex; align-items: center; justify-content: center;">
                         
                         <!-- Video Frame -->
                         <iframe src="<?= htmlspecialchars($item['video_url']) ?>" style="width: 100%; height: 100%; border: none;" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
                         <!-- Overlay Content on the Left Bottom -->
-                        <div style="position: absolute; bottom: 0; left: 0; right: 80px; padding: 30px 20px; background: linear-gradient(0deg, rgba(0,0,0,0.9) 0%, transparent 100%); color: #fff; pointer-events: none;">
+                        <div style="position: absolute; bottom: 0; left: 0; right: 80px; padding: 25px 16px; background: linear-gradient(0deg, rgba(0,0,0,0.9) 0%, transparent 100%); color: #fff; pointer-events: none;">
                             <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
-                                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=100" style="width: 32px; height: 32px; border-radius: 50%; border: 2px solid var(--accent); object-fit: cover;">
-                                <span style="font-weight: 700; font-size: 13px;">@perpetuah.realtor</span>
-                                <span style="background: var(--accent); color: #000; font-size: 10px; font-weight: 800; padding: 1px 6px; border-radius: 10px;">VERIFIED</span>
+                                <img src="<?= htmlspecialchars(normalize_media_url($realtor_image ?? 'assets/images/perpetuah.jpg')) ?>" onerror="this.src='https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=100'" style="width: 30px; height: 30px; border-radius: 50%; border: 2px solid var(--accent); object-fit: cover;">
+                                <span style="font-weight: 700; font-size: 12px;">@perpetuah.realtor</span>
+                                <span style="background: var(--accent); color: #000; font-size: 9px; font-weight: 800; padding: 1px 5px; border-radius: 10px;">VERIFIED</span>
                             </div>
-                            <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 6px; line-height: 1.3; color: #fff;"><?= htmlspecialchars($item['title']) ?></h3>
-                            <p style="font-size: 12px; color: #cbd5e1; margin-bottom: 8px;"><i class="fas fa-map-marker-alt" style="color: var(--accent);"></i> <?= htmlspecialchars($item['location']) ?></p>
-                            <div style="font-size: 18px; font-weight: 800; color: var(--accent);" data-price-kes="<?= (float)$item['price_kes'] ?>">
+                            <h3 style="font-size: 15px; font-weight: 700; margin-bottom: 4px; line-height: 1.3; color: #fff;"><?= htmlspecialchars($item['title']) ?></h3>
+                            <p style="font-size: 11px; color: #cbd5e1; margin-bottom: 6px;"><i class="fas fa-map-marker-alt" style="color: var(--accent);"></i> <?= htmlspecialchars($item['location']) ?></p>
+                            <div style="font-size: 16px; font-weight: 800; color: var(--accent);" data-price-kes="<?= (float)$item['price_kes'] ?>">
                                 <?= format_price((float)$item['price_kes']) ?>
                             </div>
                         </div>
 
                         <!-- Right Floating Action Icons (TikTok Style) -->
-                        <div style="position: absolute; right: 15px; bottom: 40px; display: flex; flex-direction: column; gap: 20px; align-items: center; z-index: 10;">
+                        <div style="position: absolute; right: 12px; bottom: 35px; display: flex; flex-direction: column; gap: 16px; align-items: center; z-index: 10;">
                             <!-- WhatsApp Inquiry -->
-                            <a href="https://wa.me/254708289852?text=Hello%20Perpetuah,%20I%20saw%20the%20video%20for%20<?= urlencode($item['title']) ?>%20and%20I%20am%20interested!" target="_blank" style="background: #25D366; width: 46px; height: 46px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 22px; box-shadow: 0 4px 12px rgba(37,211,102,0.4);">
+                            <a href="https://wa.me/254708289852?text=Hello%20Perpetuah,%20I%20saw%20the%20video%20for%20<?= urlencode($item['title']) ?>%20and%20I%20am%20interested!" target="_blank" style="background: #25D366; width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 20px; box-shadow: 0 4px 12px rgba(37,211,102,0.4);" aria-label="WhatsApp Inquiry">
                                 <i class="fab fa-whatsapp"></i>
                             </a>
                             <!-- View Property -->
-                            <a href="property-details.php?id=<?= $item['id'] ?>" style="background: rgba(255,255,255,0.2); backdrop-filter: blur(10px); width: 46px; height: 46px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 18px;">
+                            <a href="<?= htmlspecialchars(app_path('property-details?id=' . (int)$item['id'])) ?>" style="background: rgba(255,255,255,0.25); backdrop-filter: blur(10px); width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 16px;" aria-label="View Details">
                                 <i class="fas fa-external-link-alt"></i>
                             </a>
                             <!-- Like Button -->
-                            <button type="button" onclick="this.style.color = this.style.color === 'rgb(239, 68, 68)' ? '#fff' : '#ef4444'" style="background: rgba(255,255,255,0.2); backdrop-filter: blur(10px); width: 46px; height: 46px; border-radius: 50%; border: none; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 20px; cursor: pointer;">
+                            <button type="button" onclick="this.style.color = this.style.color === 'rgb(239, 68, 68)' ? '#fff' : '#ef4444'" style="background: rgba(255,255,255,0.25); backdrop-filter: blur(10px); width: 42px; height: 42px; border-radius: 50%; border: none; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 18px; cursor: pointer;" aria-label="Favorite Video">
                                 <i class="fas fa-heart"></i>
                             </button>
                         </div>
@@ -170,42 +188,42 @@ require_once __DIR__ . '/includes/nav.php';
 
     <?php else: ?>
         <!-- ============================================================== -->
-        <!-- MODE 2: CINEMA SPLIT VIEW (IG / YOUTUBE VIDEO + DETAILS & COMMENTS) -->
+        <!-- MODE 2: CINEMA SPLIT VIEW (IG / YOUTUBE VIDEO + DETAILS) -->
         <!-- ============================================================== -->
-        <div style="display: grid; grid-template-columns: 1.8fr 1.2fr; gap: 30px; align-items: start;">
+        <div class="property-main-layout">
             
             <!-- Left Side: Main Large Video Player + Property Carousel -->
             <div>
-                <div style="background: #000; border-radius: 16px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.15); margin-bottom: 25px;">
+                <div style="background: #000; border-radius: 12px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.15); margin-bottom: 22px;">
                     <div style="position: relative; padding-bottom: 56.25%; height: 0;">
                         <iframe src="<?= htmlspecialchars($active_video['video_url']) ?>" style="position: absolute; top:0; left: 0; width: 100%; height: 100%; border: none;" allow="autoplay; encrypted-media" allowfullscreen></iframe>
                     </div>
                 </div>
 
-                <div style="background: #ffffff; border: 1px solid var(--border); border-radius: 12px; padding: 25px; box-shadow: var(--card-shadow); margin-bottom: 25px;">
+                <div class="contact-card" style="margin-bottom: 25px;">
                     <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; flex-wrap: wrap; gap: 10px;">
                         <div>
-                            <span style="background: rgba(195,154,77,0.12); color: var(--accent); font-weight: 700; font-size: 11px; padding: 4px 10px; border-radius: 20px; text-transform: uppercase;">
+                            <span class="video-platform-chip">
                                 <?= htmlspecialchars(strtoupper($active_video['type'])) ?>
                             </span>
-                            <h2 class="font-serif" style="font-size: 24px; color: #0f172a; margin-top: 6px;"><?= htmlspecialchars($active_video['title']) ?></h2>
+                            <h2 class="font-serif" style="font-size: clamp(20px, 3vw, 24px); color: #0f172a; margin-top: 6px;"><?= htmlspecialchars($active_video['title']) ?></h2>
                             <p style="color: var(--gray); font-size: 14px;"><i class="fas fa-map-marker-alt" style="color: var(--accent);"></i> <?= htmlspecialchars($active_video['location']) ?></p>
                         </div>
 
                         <div style="text-align: right;">
-                            <div style="font-size: 24px; font-weight: 800; color: var(--accent);" data-price-kes="<?= (float)$active_video['price_kes'] ?>">
+                            <div style="font-size: clamp(20px, 3vw, 24px); font-weight: 800; color: var(--accent);" data-price-kes="<?= (float)$active_video['price_kes'] ?>">
                                 <?= format_price((float)$active_video['price_kes']) ?>
                             </div>
                             <span style="font-size: 11px; color: var(--gray);">Ready Title Deed</span>
                         </div>
                     </div>
 
-                    <div style="display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap;">
-                        <a href="https://wa.me/254708289852?text=Hello%20Perpetuah,%20I%20am%20watching%20the%20video%20for%20<?= urlencode($active_video['title']) ?>%20and%20would%20like%20to%20inquire." target="_blank" class="btn btn-whatsapp" style="padding: 12px 20px;">
+                    <div style="display: flex; gap: 10px; margin-top: 18px; flex-wrap: wrap;">
+                        <a href="https://wa.me/254708289852?text=Hello%20Perpetuah,%20I%20am%20watching%20the%20video%20for%20<?= urlencode($active_video['title']) ?>%20and%20would%20like%20to%20inquire." target="_blank" class="btn btn-whatsapp" style="padding: 10px 18px; flex: 1;">
                             <i class="fab fa-whatsapp"></i> WhatsApp Perpetuah
                         </a>
-                        <a href="property-details.php?id=<?= $active_video['id'] ?>" class="btn btn-primary" style="padding: 12px 20px;">
-                            <i class="fas fa-info-circle"></i> Full Property Details
+                        <a href="<?= htmlspecialchars(app_path('property-details?id=' . (int)$active_video['id'])) ?>" class="btn btn-primary" style="padding: 10px 18px; flex: 1;">
+                            <i class="fas fa-info-circle"></i> View Listing Specs
                         </a>
                     </div>
                 </div>
@@ -235,13 +253,13 @@ require_once __DIR__ . '/includes/nav.php';
             <!-- Right Side: Property Inquiry Form & Live Comments -->
             <div>
                 <!-- Schedule Site Visit / Inquiry Card -->
-                <div style="background: #ffffff; border: 1px solid var(--border); border-radius: 12px; padding: 30px; box-shadow: var(--card-shadow); margin-bottom: 25px;">
+                <div class="contact-card" style="margin-bottom: 25px;">
                     <h3 class="font-serif" style="font-size: 20px; margin-bottom: 6px; color: #0f172a;">Book a Viewing / Inquire</h3>
                     <p style="font-size: 13px; color: var(--gray); margin-bottom: 20px;">
                         Interested in <strong><?= htmlspecialchars($active_video['title']) ?></strong>? Send a direct message to Perpetuah Realtor.
                     </p>
 
-                    <form action="contact.php?action=book_tour" method="POST">
+                    <form action="<?= htmlspecialchars(app_path('contact?action=book_tour')) ?>" method="POST">
                         <input type="hidden" name="csrf_token" value="<?= get_csrf_token() ?>">
                         <input type="hidden" name="property_id" value="<?= $active_video['id'] ?>">
 
@@ -265,19 +283,19 @@ require_once __DIR__ . '/includes/nav.php';
                             <textarea name="notes" rows="3" placeholder="e.g. Inquiring about 12-month installment options..."></textarea>
                         </div>
 
-                        <button type="submit" class="btn btn-gold" style="width: 100%; padding: 14px; font-weight: 700;">
+                        <button type="submit" class="btn btn-gold" style="width: 100%; padding: 12px; font-weight: 700;">
                             <i class="fas fa-paper-plane"></i> Send Inquiry to Perpetuah
                         </button>
                     </form>
                 </div>
 
                 <!-- Verified Realtor Contact Box -->
-                <div style="background: linear-gradient(135deg, #0f172a, #1e293b); color: #fff; border-radius: 12px; padding: 25px; box-shadow: var(--card-shadow);">
-                    <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
-                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=120" style="width: 54px; height: 54px; border-radius: 50%; border: 2px solid var(--accent); object-fit: cover;">
+                <div style="background: linear-gradient(135deg, #0f172a, #1e293b); color: #fff; border-radius: 12px; padding: 22px; box-shadow: var(--card-shadow);">
+                    <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 12px;">
+                        <img src="<?= htmlspecialchars(normalize_media_url($realtor_image ?? 'assets/images/perpetuah.jpg')) ?>" onerror="this.src='https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=120'" alt="Perpetuah Realtor" style="width: 50px; height: 50px; border-radius: 50%; border: 2px solid var(--accent); object-fit: cover;">
                         <div>
-                            <h4 style="font-size: 16px; margin: 0; color: #fff;">Perpetuah Chepchirchir</h4>
-                            <span style="font-size: 12px; color: var(--accent);">Eldoret Property Expert 🔑</span>
+                            <h4 style="font-size: 15px; margin: 0; color: #fff;">Perpetuah Chepchirchir</h4>
+                            <span style="font-size: 11px; color: var(--accent); font-weight: 700; text-transform: uppercase;">Eldoret Property Expert 🔑</span>
                         </div>
                     </div>
                     <p style="font-size: 13px; color: #cbd5e1; line-height: 1.5; margin-bottom: 15px;">
